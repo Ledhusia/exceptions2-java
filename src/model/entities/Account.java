@@ -6,7 +6,7 @@ public class Account {
     private double balance;
     private double withdrawLimit;
 
-    public Account(){
+    public Account() {
 
     }
 
@@ -49,11 +49,18 @@ public class Account {
         this.withdrawLimit = withdrawLimit;
     }
 
-    public void deposit(double amount){
+    public void deposit(double amount) {
         balance += amount;
     }
 
-    public void withdraw(double amount){
-        balance -= amount;
+    public String withdraw(double amount) {
+        if (amount > withdrawLimit) {
+            return "The amount exceeds withdraw limit";
+        } else if (amount > balance) {
+            return "Not enough balance";
+        } else {
+            balance -= amount;
+            return null;
+        }
     }
 }
