@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import model.entities.Account;
+import model.exceptions.BusinessException;
 
 public class Program {
     public static void main(String[] args) {
@@ -11,28 +12,27 @@ public class Program {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Enter account data");
-        System.out.printf("Number: ");
+        System.out.print("Number: ");
         int number = sc.nextInt();
         sc.nextLine();
-        System.out.printf("Holder: ");
+        System.out.print("Holder: ");
         String holder = sc.nextLine();
-        System.out.printf("Initial balance: ");
+        System.out.print("Initial balance: ");
         double balance = sc.nextDouble();
-        System.out.printf("Withdraw limit: ");
+        System.out.print("Withdraw limit: ");
         double withdrawLimit = sc.nextDouble();
 
         Account account = new Account(number, holder, balance, withdrawLimit);
 
         System.out.println();
-        System.out.printf("Enter amount for withdraw: ");
+        System.out.print("Enter amount for withdraw: ");
         double amount = sc.nextDouble();
 
-        String error = account.withdraw(amount);
-        
-        if(error != null){
-            System.out.println("Withdraw error: " + error);
-        } else {
-            System.out.println("New balance: " + account.getBalance());
+        try {
+            account.withdraw(amount);
+            System.out.printf("New balance: %.2f%n", account.getBalance());
+        } catch (BusinessException e) {
+            System.out.println("Withdraw error:" + e.getMessage());
         }
         sc.close();
     }
